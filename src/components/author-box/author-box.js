@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import AuthorForm from "./author-form";
 import AuthorTable from "./author-table";
 import $ from "jquery";
+import PubSub from "pubsub-js";
 
-const URL = 'https://cdc-react.herokuapp.com';
+// const URL = 'https://cdc-react.herokuapp.com';
+const URL = 'http://localhost:8080';
 
 export default class AuthorBox extends Component {
 
@@ -16,14 +18,21 @@ export default class AuthorBox extends Component {
 
         $.getJSON(
             URL + '/api/autores',
-            res => this.setState({authors: res})
+            res => {
+                console.log(res);
+                this.setState({authors: res});}
+        );
+
+        PubSub.subscribe(
+            'update-authors-table',
+            (topic, newAuthorsList) => this.setState({authors: newAuthorsList})
         );
     }
 
     render() {
         return (
             <div id="author-box">
-                <AuthorForm updateCallback={newAuthorsList => this.setState({authors: newAuthorsList})}/>
+                <AuthorForm/>
                 <AuthorTable authors={this.state.authors}/>
             </div>
         );

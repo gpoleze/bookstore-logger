@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import GenericInput from "../common/generic-input";
 import $ from 'jquery';
+import PubSub from 'pubsub-js'
+import GenericInput from "../common/generic-input";
 import GenericSubmit from "../common/generic-submit";
 
-const URL = 'https://cdc-react.herokuapp.com';
-// URL = 'http://localhost:8080';
+// const URL = 'https://cdc-react.herokuapp.com';
+const URL = 'http://localhost:8080';
 const API = URL + '/api';
 
 
@@ -26,7 +27,7 @@ export default class AuthorForm extends Component {
             dataType: 'json',
             type: 'post',
             data: JSON.stringify(user),
-            success: res => this.props.updateCallback(res),
+            success: res => PubSub.publish('update-authors-table', res),
             error: err => console.log(err)
         });
     }
