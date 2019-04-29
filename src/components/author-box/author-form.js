@@ -3,6 +3,8 @@ import $ from 'jquery';
 import PubSub from 'pubsub-js'
 import GenericInput from "../common/generic-input";
 import GenericSubmit from "../common/generic-submit";
+import {ErrorHandler} from "./error-handler";
+
 
 // const URL = 'https://cdc-react.herokuapp.com';
 const URL = 'http://localhost:8080';
@@ -18,7 +20,7 @@ export default class AuthorForm extends Component {
     sendForm(event) {
         event.preventDefault();
 
-        const user = {nome: this.state.nome, email: this.state.email, senha: this.state.password};
+        const user = {nome: this.state.nome, email: this.state.email, senha: this.state.senha};
         console.log(user);
 
         $.ajax({
@@ -27,8 +29,15 @@ export default class AuthorForm extends Component {
             dataType: 'json',
             type: 'post',
             data: JSON.stringify(user),
-            success: res => PubSub.publish('update-authors-table', res),
-            error: err => console.log(err)
+            success: res => {
+                PubSub.publish('update-authors-table', res);
+                this.setState({nome: '', email: '', senha: ''});
+            },
+            error: err => {
+                if (err.status === 400)
+                    new ErrorHandler().publishErrors(err.responseJSON);
+            },
+            beforeSend: () => PubSub.publish("clean-errors", {})
         });
     }
 
@@ -41,7 +50,7 @@ export default class AuthorForm extends Component {
     }
 
     setPassword(event) {
-        this.setState({password: event.target.value});
+        this.setState({senha: event.target.value});
     }
 
     render() {
@@ -51,7 +60,7 @@ export default class AuthorForm extends Component {
                 <form className="pure-form pure-form-aligned" method="POST" onSubmit={this.sendForm.bind(this)}>
 
                     <GenericInput
-                        id="name" name="name"
+                        id="name" name="nome"
                         label="Name" type="text"
                         value={this.state.nome} onChange={e => this.setNome(e)}/>
                     <GenericInput
@@ -59,9 +68,9 @@ export default class AuthorForm extends Component {
                         label="Email" type="email"
                         value={this.state.email} onChange={e => this.setEmail(e)}/>
                     <GenericInput
-                        id="password" name="password"
+                        id="password" name="senha"
                         label="Password" type="password"
-                        value={this.state.password} onChange={e => this.setPassword(e)}/>
+                        value={this.state.senha} onChange={e => this.setPassword(e)}/>
 
                     <GenericSubmit text="Submit"/>
 

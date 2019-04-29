@@ -18,9 +18,7 @@ export default class AuthorBox extends Component {
 
         $.getJSON(
             URL + '/api/autores',
-            res => {
-                console.log(res);
-                this.setState({authors: res});}
+            res => this.setState({authors: res})
         );
 
         PubSub.subscribe(
