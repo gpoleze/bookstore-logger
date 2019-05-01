@@ -1,4 +1,4 @@
-import {ErrorHandler} from "../common/error-handler";
+import {ErrorHandler} from "./error-handler";
 
 const API = 'http://localhost:8080/api';
 
@@ -20,6 +20,6 @@ export function apiPost(service, data) {
             credentials: "same-origin"
         })
         .then(response => response.json())
-        .then(ErrorHandler.handleError)
+        .then(ErrorHandler.statusCodes)
         .catch(err => console.log('Error while attempting to post:', err));
 }
