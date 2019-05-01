@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import AuthorForm from "./author-form";
-import AuthorTable from "./author-table";
 import $ from "jquery";
 import PubSub from "pubsub-js";
-
-// const URL = 'https://cdc-react.herokuapp.com';
-const URL = 'http://localhost:8080';
+import AuthorTable from "./author-table";
+import AuthorForm from "./author-form";
+import {apiGet} from "../core/api-handler";
 
 export default class AuthorBox extends Component {
 
@@ -16,10 +14,8 @@ export default class AuthorBox extends Component {
 
     componentDidMount() {
 
-        $.getJSON(
-            URL + '/api/autores',
-            res => this.setState({authors: res})
-        );
+        apiGet('/autores')
+            .then(res => this.setState({authors: res}));
 
         PubSub.subscribe(
             'update-authors-table',

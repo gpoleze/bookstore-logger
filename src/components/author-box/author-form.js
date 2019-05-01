@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
 import PubSub from 'pubsub-js'
-import GenericInput from "../common/generic-input";
-import GenericSubmit from "../common/generic-submit";
-import {ErrorHandler} from "./error-handler";
-
-
-// const URL = 'https://cdc-react.herokuapp.com';
-const URL = 'http://localhost:8080';
-const API = URL + '/api';
-
+import GenericInput from "../common/form-elements/generic-input";
+import GenericSubmit from "../common/form-elements/generic-submit";
+import {apiPost} from "../core/api-handler";
 
 export default class AuthorForm extends Component {
     constructor() {
@@ -21,24 +14,17 @@ export default class AuthorForm extends Component {
         event.preventDefault();
 
         const user = {nome: this.state.nome, email: this.state.email, senha: this.state.senha};
-        console.log(user);
 
-        $.ajax({
-            url: API + "/autores",
-            contentType: 'application/json',
-            dataType: 'json',
-            type: 'post',
-            data: JSON.stringify(user),
-            success: res => {
-                PubSub.publish('update-authors-table', res);
-                this.setState({nome: '', email: '', senha: ''});
-            },
-            error: err => {
-                if (err.status === 400)
-                    new ErrorHandler().publishErrors(err.responseJSON);
-            },
-            beforeSend: () => PubSub.publish("clean-errors", {})
-        });
+        PubSub.publish("clean-errors", {});
+
+        apiPost('/autores', user)
+            .then(res => {
+                    if (res) {
+                        PubSub.publish('update-authors-table', res);
+                        this.setState({nome: '', email: '', senha: ''});
+                    }
+                }
+            );
     }
 
     setNome(event) {
