@@ -1,19 +1,50 @@
 import React from "react";
-import GenericInput from "../common/generic-input";
-import GenericSubmit from "../common/generic-submit";
+import PubSub from "pubsub-js";
+import GenericInput from "../common/form-elements/generic-input";
+import GenericSubmit from "../common/form-elements/generic-submit";
+import GenericSelect from "../common/form-elements/generic-select";
+import {apiGet, apiPost} from "../core/api-handler";
+import {ErrorHandler} from "../core/error-handler";
 
 export default class BookForm extends React.Component {
 
     constructor() {
         super();
-        this.state = {titulo: '', preco: '', autorId: ''};
-
+        this.state = {titulo: '', preco: '', autorId: '', authors: []};
     }
 
     sendForm(event) {
         event.preventDefault();
-        console.log(this.state);
-        console.log("Form sent.");
+
+        PubSub.publish("clean-errors", {});
+
+        apiPost(
+            '/livros',
+            {titulo: this.state.titulo, preco: this.state.preco, autorId: this.state.autorId}
+        )
+            .then(books => {
+                if (books) {
+                    console.log('BookForm.sendForm: ', books);
+                    PubSub.publish('update-books-table', books);
+                    this.setState({titulo: '', preco: '', autorId: ''})
+                }
+            })
+            .catch(err => ErrorHandler.publishErrors(err.responseJSON));
+
+    }
+
+    componentDidMount() {
+
+        apiGet("/autores").then(response =>
+            this.setState({
+                authors: response.sort(
+                    (a, b) => {
+                        if (a.nome.toLowerCase() > b.nome.toLowerCase()) return 1;
+                        if (a.nome.toLowerCase() < b.nome.toLowerCase()) return -1;
+                        return 0;
+                    }
+                )
+            }));
     }
 
     render() {
@@ -37,11 +68,13 @@ export default class BookForm extends React.Component {
                         value={this.state.preco}
                         onChange={(e) => this.setState({preco: e.target.value})}
                     />
-                    <GenericInput
-                        type="select"
-                        id="title"
-                        label="Title"
-                        name="titulo"
+                    <GenericSelect
+                        id="authorId"
+                        name="autorId"
+                        label="Author"
+                        value={this.state.autorId}
+                        actionFunction={(event) => this.setState({autorId: event.target.value})}
+                        options={this.state.authors}
                     />
                     <GenericSubmit text="Submit"/>
                 </form>
