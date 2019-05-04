@@ -1,43 +1,43 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
-import './css/pure-min.css';
-import './css/side-menu.css';
+import './App.css';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import {withStyles} from "@material-ui/core";
+
+import createStyles from "@material-ui/core/es/styles/createStyles";
+import MenuItems from "./components/header-box/HeaderBox";
+
+const styles = createStyles({
+    root: {
+        flexGrow: 1,
+    },
+});
 
 class App extends Component {
 
     render() {
+        const classes = this.props.classes;
         return (
-            <div id="layout">
-                <a href="#menu" id="menuLink" className="menu-link">
-                    <span></span>
-                </a>
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <MenuItems/>
+                        <Typography variant="h6" color="inherit" className={classes.grow}>
+                            Book Logger
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
 
-                <div id="menu">
-                    <div className="pure-menu">
-                        <a className="pure-menu-heading" href="/">Company</a>
-
-                        <ul className="pure-menu-list">
-                            <li className="pure-menu-item">
-                                <Link to="/" className="pure-menu-link">Home</Link>
-                            </li>
-                            <li className="pure-menu-item">
-                                <Link to="/author" className="pure-menu-link">Authors</Link>
-                            </li>
-                            <li className="pure-menu-item">
-                                <Link to="/book" className="pure-menu-link">Books</Link>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-
-                <div id="main">
+                <div id='main'>
                     {this.props.children}
                 </div>
+
             </div>
+
         );
     }
 
 }
 
-export default App;
+export default withStyles(styles)(App);
