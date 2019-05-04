@@ -1,9 +1,6 @@
 import React from 'react'
-import {Link, withRouter} from "react-router-dom";
-import {createStyles, withStyles, IconButton, Menu, MenuItem} from "@material-ui/core";
+import {createStyles, IconButton, Menu, withStyles} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
-import PropTypes from 'prop-types';
-import Button from "@material-ui/core/Button";
 import LinkItem from "./LinkItem";
 
 const styles = createStyles({
@@ -32,7 +29,6 @@ class HeaderBox extends React.Component {
 
     render() {
         const {anchorEl} = this.state;
-        const classes = this.props.classes;
         return (
             <div>
                 <div onClick={this.handleClick}>
