@@ -41,28 +41,24 @@ export default class AuthorForm extends Component {
 
     render() {
         return (
-            <div className="pure-form pure-form-aligned">
+            <form method="POST" onSubmit={this.sendForm.bind(this)}>
 
-                <form className="pure-form pure-form-aligned" method="POST" onSubmit={this.sendForm.bind(this)}>
+                <GenericInput
+                    id="name" name="nome"
+                    label="Name" type="text"
+                    value={this.state.nome} onChange={e => this.setNome(e)}/>
+                <GenericInput
+                    id="email" name="email"
+                    label="Email" type="email"
+                    value={this.state.email} onChange={e => this.setEmail(e)}/>
+                <GenericInput
+                    id="password" name="senha"
+                    label="Password" type="password"
+                    value={this.state.senha} onChange={e => this.setPassword(e)}/>
 
-                    <GenericInput
-                        id="name" name="nome"
-                        label="Name" type="text"
-                        value={this.state.nome} onChange={e => this.setNome(e)}/>
-                    <GenericInput
-                        id="email" name="email"
-                        label="Email" type="email"
-                        value={this.state.email} onChange={e => this.setEmail(e)}/>
-                    <GenericInput
-                        id="password" name="senha"
-                        label="Password" type="password"
-                        value={this.state.senha} onChange={e => this.setPassword(e)}/>
+                <GenericSubmit text="Submit"/>
 
-                    <GenericSubmit text="Submit"/>
-
-                </form>
-
-            </div>
+            </form>
         );
     }
 

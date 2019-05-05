@@ -8,11 +8,11 @@ import {Grid, withStyles} from "@material-ui/core";
 import createStyles from "@material-ui/core/es/styles/createStyles";
 import MenuItems from "./components/header-box/HeaderBox";
 
-const styles = createStyles({
+const styles = {
     root: {
         flexGrow: 1,
     },
-});
+};
 
 class App extends Component {
 
@@ -29,8 +29,15 @@ class App extends Component {
                     </Toolbar>
                 </AppBar>
 
-                <Grid container justify="center">
+                <Grid
+                    container
+                    spacing={0}
+                    alignItems={'center'}
+                    justify={'center'}
+                >
+                    <Grid item>
                     {this.props.children}
+                    </Grid>
                 </Grid>
 
             </div>

@@ -1,9 +1,15 @@
 import React, {Component} from 'react'
 import {Button, withStyles} from "@material-ui/core";
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
     button: {
-        margin: theme.spacing.unit,
+        margin: theme.spacing.unit
+    },
+    container: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
 
@@ -11,9 +17,11 @@ const styles = theme => ({
 class GenericSubmit extends Component {
     render() {
         return (
-            <Button variant="contained" color="primary" className={this.props.classes.formControl} type="submit">
-                {this.props.text}
-            </Button>
+            <div className={this.props.classes.container}>
+                <Button variant="contained" size="large" color="primary" className={this.props.classes.margin}>
+                    {this.props.text}
+                </Button>
+            </div>
         );
     }
 }

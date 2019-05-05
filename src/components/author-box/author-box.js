@@ -4,6 +4,7 @@ import AuthorTable from "./author-table";
 import AuthorForm from "./author-form";
 import {apiGet} from "../core/api-handler";
 import HeaderTitle from "../common/HeaderTitle";
+import Divider from "@material-ui/core/Divider";
 
 export default class AuthorBox extends Component {
 
@@ -30,6 +31,7 @@ export default class AuthorBox extends Component {
 
                 <div id="author-box">
                     <AuthorForm/>
+                    <Divider style={{margin:20}}/>
                     <AuthorTable authors={this.state.authors}/>
                 </div>
             </div>

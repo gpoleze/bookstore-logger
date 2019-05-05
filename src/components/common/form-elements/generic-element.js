@@ -6,6 +6,7 @@ export default class GenericElement extends React.Component {
         formControl: {
             margin: theme.spacing.unit,
             minWidth: 120,
+            width: 100 + '%'
         },
         selectEmpty: {
             marginTop: theme.spacing.unit * 2,
