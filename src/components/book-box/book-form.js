@@ -51,14 +51,14 @@ export default class BookForm extends React.Component {
         return (
             <div className="pure-form pure-form-aligned">
 
-                <form className="pure-form pure-form-aligned" onSubmit={(event) => this.sendForm(event)}>
+                <form className="pure-form pure-form-aligned" onSubmit={e=>this.sendForm(e)}>
                     <GenericInput
                         type="text"
                         id="title"
                         label="Title"
                         name="titulo"
                         value={this.state.titulo}
-                        onChange={(e) => this.setState({titulo: e.target.value})}
+                        onChange={e => this.setState({titulo: e.target.value})}
                     />
                     <GenericInput
                         type="number"
@@ -66,14 +66,15 @@ export default class BookForm extends React.Component {
                         label="Price"
                         name="preco"
                         value={this.state.preco}
-                        onChange={(e) => this.setState({preco: e.target.value})}
+                        onChange={e => this.setState({preco: e.target.value})}
                     />
                     <GenericSelect
                         id="authorId"
                         name="autorId"
-                        label="Author"
+                        label="Select Author"
                         value={this.state.autorId}
-                        actionFunction={(event) => this.setState({autorId: event.target.value})}
+                        handleChange={e => this.setState({autorId: e.target.value})}
+                        stateName="autorId"
                         options={this.state.authors}
                     />
                     <GenericSubmit text="Submit"/>

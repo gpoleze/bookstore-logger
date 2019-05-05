@@ -1,11 +1,21 @@
 import React, {Component} from 'react'
+import {Button, withStyles} from "@material-ui/core";
 
-export default class GenericSubmit extends Component {
+const styles = theme => ({
+    button: {
+        margin: theme.spacing.unit,
+    }
+});
+
+
+class GenericSubmit extends Component {
     render() {
         return (
-            <div className="pure-control-group">
-                <button type="submit" className="pure-button pure-button-primary">{this.props.text}</button>
-            </div>
+            <Button variant="contained" color="primary" className={this.props.classes.formControl} type="submit">
+                {this.props.text}
+            </Button>
         );
     }
 }
+
+export default withStyles(styles)(GenericSubmit);

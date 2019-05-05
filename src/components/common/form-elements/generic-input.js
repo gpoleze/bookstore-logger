@@ -1,16 +1,30 @@
 import React from "react";
 import GenericElement from "./generic-element";
+import {FormControl, FormHelperText, Input, InputLabel, withStyles} from "@material-ui/core";
 
+class GenericInput extends GenericElement {
 
-export default class GenericInput extends GenericElement {
     render() {
+        const props = this.props;
+        const state = this.state;
         return (
-            <div className="pure-control-group">
-                <label htmlFor={this.props.id}>{this.props.label}</label>
-                <input id={this.props.id} type={this.props.type} name={this.props.name} value={this.props.value}
-                       onChange={this.props.onChange}/>
-                <span className="error">{this.state.errorMessage}</span>
-            </div>
+                <FormControl error={!!state.errorMessage} className={props.classes.formControl}>
+
+                    <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
+
+                    <Input
+                        id={props.id}
+                        name={props.name}
+                        value={props.value}
+                        onChange={props.onChange}
+                        aria-describedby="component-error-text"
+                    />
+
+                    <FormHelperText className="component-error-text">{state.errorMessage}</FormHelperText>
+
+                </FormControl>
         );
     }
 }
+
+export default withStyles(GenericInput.STYLES)(GenericInput);

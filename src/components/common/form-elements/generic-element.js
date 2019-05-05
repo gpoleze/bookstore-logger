@@ -2,6 +2,16 @@ import React from "react";
 import * as PubSub from "pubsub-js";
 
 export default class GenericElement extends React.Component {
+    static STYLES = theme => ({
+        formControl: {
+            margin: theme.spacing.unit,
+            minWidth: 120,
+        },
+        selectEmpty: {
+            marginTop: theme.spacing.unit * 2,
+        },
+    });
+
     constructor() {
         super();
         this.state = {errorMessage: ''}
