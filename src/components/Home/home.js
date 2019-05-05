@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
+import HeaderTitle from "../common/HeaderTitle";
 
-export default class Home extends Component{
+export default class Home extends Component {
     render() {
-        return(
-            <div className="header">
-                <h1>Welcome to The System Logger</h1>
-            </div>
-        );
+        return (<HeaderTitle title="Welcome to The System Logger"/>);
     }
-
 }

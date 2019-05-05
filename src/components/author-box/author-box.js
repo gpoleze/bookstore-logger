@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import $ from "jquery";
 import PubSub from "pubsub-js";
 import AuthorTable from "./author-table";
 import AuthorForm from "./author-form";
 import {apiGet} from "../core/api-handler";
+import HeaderTitle from "../common/HeaderTitle";
 
 export default class AuthorBox extends Component {
 
@@ -26,14 +26,11 @@ export default class AuthorBox extends Component {
     render() {
         return (
             <div>
-                <div className="header">
-                    <h1>Author Log</h1>
-                </div>
-                <div className="content">
-                    <div id="author-box">
-                        <AuthorForm/>
-                        <AuthorTable authors={this.state.authors}/>
-                    </div>
+                <HeaderTitle title="Author Log"/>
+
+                <div id="author-box">
+                    <AuthorForm/>
+                    <AuthorTable authors={this.state.authors}/>
                 </div>
             </div>
         );
