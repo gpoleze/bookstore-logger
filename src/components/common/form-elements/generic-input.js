@@ -16,6 +16,7 @@ class GenericInput extends GenericElement {
                         id={props.id}
                         name={props.name}
                         value={props.value}
+                        type={props.type}
                         onChange={props.onChange}
                         aria-describedby="component-error-text"
                     />

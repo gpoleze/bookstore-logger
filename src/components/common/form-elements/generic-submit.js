@@ -17,7 +17,7 @@ class GenericSubmit extends Component {
     render() {
         return (
             <div className={this.props.classes.container}>
-                <Button variant="contained" size="large" color="primary" className={this.props.classes.margin}>
+                <Button variant="contained" size="large" color="primary" className={this.props.classes.margin} type='submit'>
                     {this.props.text}
                 </Button>
             </div>
