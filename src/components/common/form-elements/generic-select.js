@@ -10,11 +10,6 @@ class GenericSelect extends GenericElement {
         this.setState({[this.props.stateName]: e.target.value});
     };
 
-    constructor() {
-        super();
-        console.log("GenericSelect: ", this.state);
-    }
-
     render() {
         const props = this.props;
         const classes = props.classes;

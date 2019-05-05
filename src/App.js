@@ -4,8 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import {Grid, withStyles} from "@material-ui/core";
-
-import createStyles from "@material-ui/core/es/styles/createStyles";
 import MenuItems from "./components/header-box/HeaderBox";
 
 const styles = {
